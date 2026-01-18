@@ -18,7 +18,7 @@ public class ErrorController {
         log.error("Caught exception,ex");
         ApiErrorResponse error = ApiErrorResponse.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .message("An unexpected error occured")
+                .message("An unexpected error occurred")
                 .build();
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -29,6 +29,14 @@ public class ErrorController {
                 .message(ex.getMessage())
                 .build();
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ApiErrorResponse> handleIllegalStateException(IllegalStateException ex){
+        ApiErrorResponse error = ApiErrorResponse.builder()
+                .status(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
 }
