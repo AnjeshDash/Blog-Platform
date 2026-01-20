@@ -1,7 +1,7 @@
 package com.anjesh.blog.controllers;
 
 import com.anjesh.blog.domain.dtos.CreateTagsRequest;
-import com.anjesh.blog.domain.dtos.TagResponse;
+import com.anjesh.blog.domain.dtos.TagDto;
 import com.anjesh.blog.domain.entities.Tag;
 import com.anjesh.blog.mappers.TagMapper;
 import com.anjesh.blog.services.TagService;
@@ -22,17 +22,17 @@ public class TagController {
     private final TagMapper tagMapper;
 
     @GetMapping
-    public ResponseEntity<List<TagResponse>> getAllTags(){
+    public ResponseEntity<List<TagDto>> getAllTags(){
         List<Tag> tags = tagService.getTags();
-        List<TagResponse> tagResponses = tags.stream().map(tagMapper::toTagResponse).toList();
-        return ResponseEntity.ok(tagResponses);
+        List<TagDto> tagRespons = tags.stream().map(tagMapper::toTagResponse).toList();
+        return ResponseEntity.ok(tagRespons);
     }
     @PostMapping
-    public ResponseEntity<List<TagResponse>> createTags(@RequestBody CreateTagsRequest createTagsRequest){
+    public ResponseEntity<List<TagDto>> createTags(@RequestBody CreateTagsRequest createTagsRequest){
         List<Tag> savedTags = tagService.createTags(createTagsRequest.getNames());
-        List<TagResponse> createdTagResponses = savedTags.stream().map(tagMapper::toTagResponse).toList();
+        List<TagDto> createdTagRespons = savedTags.stream().map(tagMapper::toTagResponse).toList();
         return new ResponseEntity<>(
-                createdTagResponses,
+                createdTagRespons,
                 HttpStatus.CREATED
         );
     }
