@@ -21,8 +21,10 @@ public class UpdatePostRequest {
     private UUID categoryId;
 
     @Builder.Default
-    private Set<UUID> tagsIds = new HashSet<>();
+    private Set<UUID> tagIds = new HashSet<>();
 
     private PostStatus status;
+
+
 
 }
