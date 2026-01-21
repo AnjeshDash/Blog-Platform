@@ -34,6 +34,12 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
+    public Post getPost(UUID id) {
+        return postRepository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("Post does not exist with ID: "+id));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<Post> getAllPosts(UUID categoryId, UUID tagId) {
         if(categoryId != null && tagId != null){
